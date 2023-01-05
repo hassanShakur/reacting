@@ -1,16 +1,13 @@
 import React from 'react';
-import ExpenseDate from './ExpenseDate';
+import SingleExpense from './SingleExpense';
 
-const Expenses = (props) => {
+const Expenses = ({data}) => {
   return (
     <div className='expenses'>
-      <div className='expense-item'>
-        <ExpenseDate items={props.items}/>
-        <div className='expense-item__description'>
-          <h2>{props.items[0].title}</h2>
-          <div className='expense-item__price'>${props.items[0].amount}</div>
-        </div>
-      </div>
+      <SingleExpense data={data[0]}/>
+      <SingleExpense data={data[1]}/>
+      <SingleExpense data={data[2]}/>
+      <SingleExpense data={data[3]}/>
     </div>
   );
 };
