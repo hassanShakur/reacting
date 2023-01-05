@@ -26,8 +26,8 @@ function App() {
     },
   ];
 
-  const handleNewExpense = (newData) => {
-    console.log(newData);
+  const handleNewExpense = (expense) => {
+    console.log(expense);
   };
 
   return (
