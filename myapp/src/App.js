@@ -26,9 +26,13 @@ function App() {
     },
   ];
 
+  const handleNewExpense = (newData) => {
+    console.log(newData);
+  };
+
   return (
     <div>
-      <NewExpense />
+      <NewExpense onSaveExpense={handleNewExpense} />
       <Expenses data={expenses} />
     </div>
   );
