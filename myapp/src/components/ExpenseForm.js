@@ -1,37 +1,48 @@
 import { useState } from 'react';
 import React from 'react';
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   // UseStates
   const [enteredTitle, setEnteredTitle] = useState('');
-  const [enteredAmount, setEnteredAmount] = useState('');
+  const [enteredPrice, setEnteredPrice] = useState('');
   const [enteredDate, setEnteredDate] = useState('');
 
   // onChange Handlers
-  const titleChangeHandler = (event) => {
-    console.log(event.target.value);
-    setEnteredTitle(event.target.value);
+  const titleChangeHandler = (e) => {
+    setEnteredTitle(e.target.value);
   };
-  const amountChangeHandler = (e) => {
-    setEnteredAmount(e.target.value);
+  const priceChangeHandler = (e) => {
+    setEnteredPrice(e.target.value);
   };
   const dateChangeHandler = (e) => {
     setEnteredDate(e.target.value);
   };
+
+  // Form submission
+  const formSubmitHandler = (e) => {
+    e.preventDefault();
+    const enteredData = {
+      title: enteredTitle,
+      price: enteredPrice,
+      date: enteredDate,
+    };
+    props.onInputExpenseSubmit(enteredData)
+    
+  };
   return (
-    <form>
+    <form onSubmit={formSubmitHandler}>
       <div className='new-expense__controls'>
         <div className='new-expense__control'>
           <label htmlFor='title'>Title</label>
           <input type='text' onChange={titleChangeHandler} />
         </div>
         <div className='new-expense__control'>
-          <label htmlFor='amount'>Amount</label>
+          <label htmlFor='price'>Price</label>
           <input
             type='number'
             min='0.01'
             step='0.01'
-            onChange={amountChangeHandler}
+            onChange={priceChangeHandler}
           />
         </div>
         <div className='new-expense__control'>
