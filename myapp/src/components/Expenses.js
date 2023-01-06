@@ -1,14 +1,32 @@
-import React from 'react';
-import SingleExpense from './SingleExpense';
+import React, { useState } from 'react';
 
-const Expenses = ({data}) => {
+import SingleExpense from './SingleExpense';
+import Card from '../UI/Card';
+import ExpensesFilter from './ExpenseFilter';
+
+const Expenses = ({ data }) => {
+  const [filteredYear, setFilteredYear] = useState('2020');
+
+  const filterChangeHandler = (selectedYear) => {
+    setFilteredYear(selectedYear);
+  };
+
+  // Filter expenses according to selected year
+  const filteredExpenses = data.filter(
+    (expense) => expense.date.getFullYear().toString() === filteredYear
+  );
+
   return (
-    <div className='expenses'>
-      <SingleExpense data={data[0]}/>
-      <SingleExpense data={data[1]}/>
-      <SingleExpense data={data[2]}/>
-      <SingleExpense data={data[3]}/>
-    </div>
+    <Card className='expenses'>
+      <ExpensesFilter
+        selected={filteredYear}
+        onFilterChange={filterChangeHandler}
+      />
+
+      {filteredExpenses.map((expense) => (
+        <SingleExpense data={expense} key={expense.id} />
+      ))}
+    </Card>
   );
 };
 
