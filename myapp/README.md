@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# First Part
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Components Inside Components
 
-## Available Scripts
+On the `component` enclosed, the return will only be enclosed in the tags of the parent component.
 
-In the project directory, you can run:
+```js
+return <Card>some extra JSX</Card>;
+```
 
-### `npm start`
+In the `parent component`, use `props.children` to accept JSX in between. Also handle children classes.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```js
+const Card = (props) => {
+  const classes = `card ${props.className}`;
+  return <div className={classes}>{props.children}</div>;
+};
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Lifting State Up
 
-### `npm test`
+Is a way of communication and state passing from where it is created to where it is needed. A function is passed as a pointer to the child as a prop which will be invoked while passing in the data as a parameter, handled by `useState` hook in the parent, or the component in need of it.
+Example:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- On the needing component
 
-### `npm run build`
+```js
+const Expenses = () => {
+  const [filteredYear, setFilteredYear] = useState('2020');
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  const filterChangeHandler = (selectedYear) => {
+    setFilteredYear(selectedYear);
+  };
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  return (
+    <ExpensesFilter
+      selected={filteredYear}
+      onFilterChange={filterChangeHandler}
+    />
+  );
+};
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- On the state producing component
 
-### `npm run eject`
+```js
+const ExpensesFilter = (props) => {
+  const yearChangeHandler = (e) => {
+    props.onFilterChange(e.target.value);
+  };
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  return (
+    <div>
+      <div>
+        <label>Filter by year</label>
+        <select value={props.selected} onChange={yearChangeHandler}>
+          <option value='2022'>2022</option>
+          <option value='2021'>2021</option>
+          <option value='2020'>2020</option>
+          <option value='2019'>2019</option>
+        </select>
+      </div>
+    </div>
+  );
+};
+```
