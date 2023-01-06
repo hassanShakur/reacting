@@ -17,10 +17,10 @@ const Expenses = ({ data }) => {
         selected={filteredYear}
         onFilterChange={filterChangeHandler}
       />
-      <SingleExpense data={data[0]} />
-      <SingleExpense data={data[1]} />
-      <SingleExpense data={data[2]} />
-      <SingleExpense data={data[3]} />
+
+      {data.map((expense) => (
+        <SingleExpense data={expense} key={expense.id} />
+      ))}
     </Card>
   );
 };
