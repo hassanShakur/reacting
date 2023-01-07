@@ -47,3 +47,42 @@ const BaseFile = () => {
   return <button style={styles.submitButton} />;
 };
 ```
+
+## useRef Hook
+
+Best for reading values from the dom. Always returns an object. Like a reference to it
+
+```js
+import { useRef } from 'react';
+
+const nameInputRef = useRef();
+
+// Later in the return statement
+
+return <input ref={nameInputRef} />;
+
+// After this, the nameInputRef will always hold the value of the input and to access it
+
+const enteredName = nameInputRef.current.value;
+```
+
+It can also be used to edit the current input value.
+
+## Portals
+
+Used in static placement of react components on elements created in the `index.html` directly.
+
+```js
+import ReactDOM from 'react-dom';
+
+const SomeButton = () => {
+  return <button />;
+};
+
+ReactDOM.createPortal(
+  <SomeButton props={someProps} />,
+  document.querySelector('theCreatedElement')
+);
+```
+
+Parameters are similar to `render()`
