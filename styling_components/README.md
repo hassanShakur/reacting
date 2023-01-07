@@ -47,3 +47,23 @@ const BaseFile = () => {
   return <button style={styles.submitButton} />;
 };
 ```
+
+## useRef Hook
+
+Best for reading values from the dom. Always returns an object. Like a reference to it
+
+```js
+import { useRef } from 'react';
+
+const nameInputRef = useRef();
+
+// Later in the return statement
+
+return <input ref={nameInputRef} />;
+
+// After this, the nameInputRef will always hold the value of the input and to access it
+
+const enteredName = nameInputRef.current.value;
+```
+
+It can also be used to edit the current input value.
