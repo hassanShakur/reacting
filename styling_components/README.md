@@ -67,3 +67,22 @@ const enteredName = nameInputRef.current.value;
 ```
 
 It can also be used to edit the current input value.
+
+## Portals
+
+Used in static placement of react components on elements created in the `index.html` directly.
+
+```js
+import ReactDOM from 'react-dom';
+
+const SomeButton = () => {
+  return <button />;
+};
+
+ReactDOM.createPortal(
+  <SomeButton props={someProps} />,
+  document.querySelector('theCreatedElement')
+);
+```
+
+Parameters are similar to `render()`
