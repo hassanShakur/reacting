@@ -4,15 +4,17 @@ Just react
 
 ## Contents
 
-- Components Basics
+1. Components Basics
   - Intro to components
   - Lifting states up
   - useState hook
-- Styling Components
+2. Styling Components
   - Styled components using tagged template lits.
   - Css modules
   - React portals
   - React fragments
   - Wrappers
   - useRef hook
-- useEffect Hook
+3. useEffect Hook
+  - Cleanup function
+  - useReducer hook
