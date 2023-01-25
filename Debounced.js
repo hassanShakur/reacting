@@ -1,34 +1,3 @@
-# Reacting
-
-Just react
-
-## Contents
-
-1. Components Basics
-
-- Intro to components
-- Lifting states up
-- useState hook
-
-2. Styling Components
-
-- Styled components using tagged template lits.
-- Css modules
-- React portals
-- React fragments
-- Wrappers
-- useRef hook
-
-3. useEffect Hook
-
-- Cleanup function
-- useReducer hook
-
-## Debouncing State
-
-Handling the dependency issue in `useState` where both including and excluding a certain dependency causes an issue.
-
-```js
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
@@ -72,14 +41,3 @@ const test = () => {
 };
 
 export default test;
-```
-
-A new state is introduced that is updated from the original state after every 1 sec if the original state doesn't change in this period due to the returned `cleanup` function.
-
-```js
-return () => {
-  clearTimeout(timeoutId);
-};
-```
-
-If the new state is updated, a request is triggered immediately by the secont `useState` which has this new state `debouncedTerm` in its dependency list.
