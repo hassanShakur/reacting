@@ -83,3 +83,35 @@ return () => {
 ```
 
 If the new state is updated, a request is triggered immediately by the secont `useState` which has this new state `debouncedTerm` in its dependency list.
+
+### Linking
+
+1. Changing URL without full apge reload
+
+```js
+window.history.pushState({}, '', '/somePage');
+```
+
+2. Create an event dynamically
+
+```js
+const eventName = new popStateEvent('someEventIdentifier');
+window.dispatchEvevt(eventName);
+
+// Later on when listening
+window.addEventListener('someEventIdentifier', callbackFunc);
+```
+
+3. Restoring `ctrl + click` to open link in new tab
+
+```js
+if (e.metaKey || e.ctrlKey) {
+  return; // ie do not preventDefault
+}
+```
+
+#### Induce HTML directly to react
+
+```html
+<span dangerouslySetInnerHTML={{__html: 'some text with html in it'}}></span>
+````
