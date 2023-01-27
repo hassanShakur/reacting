@@ -112,6 +112,25 @@ if (e.metaKey || e.ctrlKey) {
 
 #### Induce HTML directly to react
 
-```html
-<span dangerouslySetInnerHTML={{__html: 'some text with html in it'}}></span>
-````
+```js
+<span
+  dangerouslySetInnerHTML={{ __html: 'some text with html in it' }}
+></span>
+```
+
+## Redux
+
+### MapStatesToProps Syntax
+
+```js
+import { connect } from 'react-redux';
+
+// Component
+const ComponentName = () => {};
+
+const mapStatesToProps = (state) => {
+  return { propToExtract: state.propNameInStore };
+};
+
+export default connect(mapStatesToProps)(ComponentName);
+```
