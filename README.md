@@ -120,17 +120,79 @@ if (e.metaKey || e.ctrlKey) {
 
 ## Redux
 
+### Reducers
+
+They accept `states` contained in the `store` together with actions dispatched and return a particular pice of code based upon some conditions.
+
+```js
+const reducerFunc = (currState, action) => {
+  if (action.type === 'SOME_ACTION_TYPE') {
+    return { something or updated currState };
+  }
+
+  return currState
+};
+```
+
+### Combining Reducers in Redux
+
+All reducers are combined together so that any action dispatched will be sure to pass through each.
+
+```js
+// In the `reducers` folder
+
+import { combinereducers } from 'redux';
+
+const reducerOne = (currState, action) => {
+  if (action.type === 'SOME_ACTION_TYPE') {
+    return { something or updated currState };
+  }
+
+  return currState
+};
+
+export default combineReducers({
+  name1: reducerOne,
+  name2: reducerTwo,
+});
+```
+
 ### MapStatesToProps Syntax
 
 ```js
 import { connect } from 'react-redux';
 
 // Component
-const ComponentName = () => {};
+const ComponentName = (props) => {
+  const neededProp = props.someName;
+};
 
 const mapStatesToProps = (state) => {
-  return { propToExtract: state.propNameInStore };
+  return { someName: state.propNameInStore };
 };
 
 export default connect(mapStatesToProps)(ComponentName);
+```
+
+### Action Component Binding
+
+To use an action in a component, it is included in the `export` so it can be used from the props of the component. Calling the function as a normal func inside the component will not work as `redux` wont have access to it in this way.
+
+```js
+import { someNamedAction } from './actions';
+
+// Component
+const ComponentName = (props) => {
+  const neededProp = props.someName;
+  const theActionFunction = props.actionFunc;
+};
+
+// mapStatesToProps
+const mapStatesToProps = (state) => {
+  return { someName: state.propNameInStore };
+};
+
+export default connect(mapStatesToProps, {
+  actionFunc: someNamedAction,
+})(ComponentName);
 ```
