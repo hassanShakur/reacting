@@ -245,3 +245,10 @@ export const fetchData = () => async (dispatch, getState) => {
   dispatch({type: 'FETCH_DATA', payload: response})
 }
 ```
+
+### Reducer Rules
+
+1. Return any value besids `undefined`.
+2. Produce a `state` or data used in the app using only previous states and data from an action.
+3. `Pure reducers` - Must not reach outside itself to determine what to return.
+4. Not mutate the `state` argument.
