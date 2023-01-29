@@ -141,7 +141,7 @@ All reducers are combined together so that any action dispatched will be sure to
 ```js
 // In the `reducers` folder
 
-import { combinereducers } from 'redux';
+import { combineReducers } from 'redux';
 
 const reducerOne = (currState, action) => {
   if (action.type === 'SOME_ACTION_TYPE') {
@@ -195,4 +195,53 @@ const mapStatesToProps = (state) => {
 export default connect(mapStatesToProps, {
   actionFunc: someNamedAction,
 })(ComponentName);
+```
+
+### Main `index.js` File
+
+```js
+import { createStore } from 'redux';
+import { Povider } from 'react-redux';
+
+import App from './components/App';
+import reducers from './reducers';
+
+// In rendering
+
+<Provider store={createStore(reducers)}>
+  <App />
+</Provider>;
+```
+
+### Using Middlewares in Async Action Creators
+
+Middlewares allow for `manuall` dispatch of actions after a certain response or resource has been acquired from some source or api. It makes sure that `redux` doesn't dispatch an action to reducers before th resource has arrived as it happens quite fast.
+Using `async` `await` syntax won't work due to some `case` inside the function after `babel's` compilation to `es15` which at `case 0` returns a `request` made inside the action creator instead of returning the object itself with `type` and optional `payload`.
+
+The used middleware below is `redux-thunk`. It is included during `store` creation.
+
+```js
+import {createStore, applyMiddleware} from 'redux'
+import thunk from 'redux-thunk'
+
+const store = createStore(reducers, applyMiddleware(thunk))
+
+// Later on
+
+<Provider store={store}>
+  <App />
+</Provider>;
+```
+
+So with `thunk`, an action creator ca return either a `function` or a normal `action`. If a func, thunk will await the response and dispatch an action manually after it's done. As parameters, the returned func receiver `dispatch` & `getState` functions.
+
+Now the action will carry this look...
+
+```js
+
+export const fetchData = () => async (dispatch, getState) => {
+  const response = await axios.get(https://some URL...);
+
+  dispatch({type: 'FETCH_DATA', payload: response})
+}
 ```
