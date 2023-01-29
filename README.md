@@ -1,3 +1,19 @@
+- [Reacting](#reacting)
+  - [Contents](#contents)
+  - [Debouncing State](#debouncing-state)
+    - [Linking](#linking)
+      - [Induce HTML directly to react](#induce-html-directly-to-react)
+  - [Redux](#redux)
+    - [Reducers](#reducers)
+    - [Combining Reducers in Redux](#combining-reducers-in-redux)
+    - [MapStatesToProps Syntax](#mapstatestoprops-syntax)
+    - [Action Component Binding](#action-component-binding)
+    - [Main `index.js` File](#main-indexjs-file)
+    - [Using Middlewares in Async Action Creators](#using-middlewares-in-async-action-creators)
+    - [Reducer Rules](#reducer-rules)
+  - [React Router](#react-router)
+    - [Router Types](#router-types)
+
 # Reacting
 
 Just react
@@ -305,3 +321,13 @@ import {Link} from 'react-router-dom'
 <Link to='/about' >About Page </Link>
 <Link to='/docs' >Documentation </Link>
 ```
+
+### Router Types
+
+There are `Browser`, `Hash` and `Memory` routers. Given navigation to `/dev` page, `BrowserRouter` will show url as `/dev`, `HashRouter` as `/#/dev` and `MemoryRouter` with nothing.
+
+The default for any server when trying to access such urls is to respong with some `html` page and if path is not defined then a `404` error is sent back. As for the local react dev server, instead of this error, it sends back the `index.htlm` file as a response to any other link. This therefore means that for some cases on deployment, `BrowserRouter` may not always work eg in `github pages`.
+
+Using `HashRouter` informs the server to ignore anything after the `#` symbol and thus respond with only the original domain which is mostly the `index.html`. This is thus much safer for deployment as the server will never struggle to decipher the route and always ignore the rest of the url leaving it to the client dev to handle.
+
+`MemoryRouter` doesn't display any routes in the history during navigation.
