@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+## useEffect
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Is a hook whose code reruns whenever some defined valiables (`elements`) change. It's used to manage side effects of the app like `HTTP Rrequests` and other none UI related activities that may otherwise cause infinite app rerendering.
 
-## Available Scripts
+It takes in 2 parameters, a callback func with code to run and an array of dependencies that the code is rerun whenever they change.
 
-In the project directory, you can run:
+Example during a login:
 
-### `npm start`
+```js
+import { useEffect } from 'react';
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+useEffect(() => {
+  setFormIsValid(
+    enteredPassword.trim().length > 4 && enteredEmail.includes('@')
+  );
+}, [enteredEmail, enteredPassword]);
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The `setFormIsValid` func will only run if the password or email changes.
 
-### `npm test`
+Without a `dependancy` item, the effect is rerun on every rerendering that happens. If the list is empty, it will run only once on app loading.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Cleanup Function
 
-### `npm run build`
+For data fetching for eg, it would be redundant to request data on every keystroke thus a `timeout` function is normally used to send requests only after some period. These timeouts need to be removed the next time the useEffect is triggered.
+Thus a useEffect can return a special func that cleans up the previous state and timeouts making it efficient.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```js
+useEffect(() => {
+  const timeout = setTimeout(() => {
+    console.log('checking');
+    setFormIsValid(
+      enteredPassword.trim().length > 4 && enteredEmail.includes('@')
+    );
+  }, 500);
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  return () => {
+    clearTimeout(timeout);
+    console.log('CLEAN');
+  };
+}, [enteredEmail, enteredPassword]);
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The cleanup is always called before the useEffect executes except the first time. Upon several consecutive keystrokes, `cheking` is seen only after 500ms while `CLEAN` after every keystroke.
 
-### `npm run eject`
+## useReducer Hook
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Is a more poerfull state handler than useState used in managing closely related or dependent states. Syntax is:
+`const [state, dispatchFn] = useReducer(reducerFn, initState, initFn);`
+The `dispatchFn` dispatches a new action that triggers state update by the `reducerFn`, which tates in the `prevState` and the `action` and return a new state. The `initFn` can set the `initState` programmatically if it's complex.
