@@ -174,6 +174,14 @@ const mapStatesToProps = (state) => {
 export default connect(mapStatesToProps)(ComponentName);
 ```
 
+This function gets access to the component's own props through a second parameter after the `state` from the store.
+
+```js
+const mapStatesToProps = (state, ownProps) => {
+  return { someName: state.propNameInStore === ownProps.name };
+};
+```
+
 ### Action Component Binding
 
 To use an action in a component, it is included in the `export` so it can be used from the props of the component. Calling the function as a normal func inside the component will not work as `redux` wont have access to it in this way.
@@ -216,7 +224,7 @@ import reducers from './reducers';
 ### Using Middlewares in Async Action Creators
 
 Middlewares allow for `manuall` dispatch of actions after a certain response or resource has been acquired from some source or api. It makes sure that `redux` doesn't dispatch an action to reducers before th resource has arrived as it happens quite fast.
-Using `async` `await` syntax won't work due to some `case` inside the function after `babel's` compilation to `es15` which at `case 0` returns a `request` made inside the action creator instead of returning the object itself with `type` and optional `payload`.
+Using `async` `await` syntax won't work due to some `case` inside the function after `babel's` compilation to `es5` which at `case 0` returns a `request` made inside the action creator instead of returning the object itself with `type` and optional `payload`.
 
 The used middleware below is `redux-thunk`. It is included during `store` creation.
 
@@ -246,9 +254,54 @@ export const fetchData = () => async (dispatch, getState) => {
 }
 ```
 
+To access a state form the redux thunk, call the `getState()` referencing the state to fetch.
+
+```js
+const stateItem = getState().item;
+```
+
 ### Reducer Rules
 
 1. Return any value besids `undefined`.
 2. Produce a `state` or data used in the app using only previous states and data from an action.
 3. `Pure reducers` - Must not reach outside itself to determine what to return.
-4. Not mutate the `state` argument.
+4. Not mutate the `state` argument. Actually you can, but this might result in the exact same state being returned causing a `re-render` not to happen resulting in some unprecedented behaviour. Make use of `lodash` if you may.
+
+## React Router
+
+`react-router-dom` can be used to manage in-app navigation with rendering different components based on the url `path`. Basic configuration is...
+
+```js
+// In App
+
+import {BrowserRouter, Route} from 'react-router-dom'
+
+// Later on
+
+const App = () => {
+  return (
+    <div>
+      <BrowserRouter>
+        <div>
+          <Route path='/' exact component={Home} />
+          <Route path='/about' exact component={About} />
+        <div/>
+      <BrowserRouter/>
+    </div>
+  )
+}
+```
+
+`BrowserRouter` should have only one child.
+
+In the nav, a `Link` is used in place of `a` tag which prevents its default page request upon clicking to enable single page app.
+
+```js
+
+import {Link} from 'react-router-dom'
+
+// Later in component
+
+<Link to='/about' >About Page </Link>
+<Link to='/docs' >Documentation </Link>
+```
