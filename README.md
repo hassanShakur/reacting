@@ -1,5 +1,6 @@
 - [Reacting](#reacting)
   - [Contents](#contents)
+    - [Portals](#portals)
   - [Debouncing State](#debouncing-state)
     - [Linking](#linking)
       - [Induce HTML directly to react](#induce-html-directly-to-react)
@@ -39,6 +40,28 @@ Just react
 
 - Cleanup function
 - useReducer hook
+
+### Portals
+
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+const OverlayModal = () => {
+  return <div className='some-overlay'></div>;
+};
+
+const Portals = () => {
+  const containerElement = document.getElementById('root-overlay');
+  return (
+    <div>
+      {ReactDOM.createPortal(<OverlayModal />, containerElement)}
+    </div>
+  );
+};
+
+export default Portals;
+```
 
 ## Debouncing State
 
