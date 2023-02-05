@@ -3,6 +3,7 @@
     - [Portals](#portals)
     - [Memos in React](#memos-in-react)
     - [UseCallback Hook](#usecallback-hook)
+    - [UseMemo Hook](#usememo-hook)
   - [Debouncing State](#debouncing-state)
     - [Linking](#linking)
       - [Induce HTML directly to react](#induce-html-directly-to-react)
@@ -80,12 +81,28 @@ export default React.memo(Component);
 
 ### UseCallback Hook
 
-Creates a reference to a function so it is not recognized as a new function or object whenever it is called. This prevents unnecessary rerendering as well eg when used with the `React.memo()`
+Creates a reference to a function so it is not recognized as a new function whenever it is called. This prevents unnecessary rerendering as well eg when used with the `React.memo()`
 
 ```js
 const someFunction = useCallback(() => {
   // Some functionality
 }, [dependencyList]);
+```
+
+### UseMemo Hook
+
+As `useCallback` memoizes functions, `useMemo` can memoize any other data in an application. It returns the valye to be memoized and memoization only happens again whenever a `dependency` value changes.
+
+```js
+import { useMemo } from 'react';
+
+const SomeComponent = (props) => {
+  const { items } = props;
+
+  const sortedItems = useMemo(() => {
+    return items.sort((a, b) => a - b);
+  }, [items]);
+};
 ```
 
 ## Debouncing State
