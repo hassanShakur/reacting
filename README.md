@@ -1,6 +1,8 @@
 - [Reacting](#reacting)
   - [Contents](#contents)
     - [Portals](#portals)
+    - [Memos in React](#memos-in-react)
+    - [UseCallback Hook](#usecallback-hook)
   - [Debouncing State](#debouncing-state)
     - [Linking](#linking)
       - [Induce HTML directly to react](#induce-html-directly-to-react)
@@ -61,6 +63,29 @@ const Portals = () => {
 };
 
 export default Portals;
+```
+
+### Memos in React
+
+Sacrifices overhead for re-executing child components for checking for changes in props. Components with memo are only rerendered if their props change.
+
+```js
+import React from 'react';
+
+// some component
+const Component = (props) => {};
+
+export default React.memo(Component);
+```
+
+### UseCallback Hook
+
+Creates a reference to a function so it is not recognized as a new function or object whenever it is called. This prevents unnecessary rerendering as well eg when used with the `React.memo()`
+
+```js
+const someFunction = useCallback(() => {
+  // Some functionality
+}, [dependencyList]);
 ```
 
 ## Debouncing State
