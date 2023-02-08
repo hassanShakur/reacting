@@ -7,6 +7,7 @@
   - [React Router](#react-router)
     - [Nested Routes](#nested-routes)
     - [Redirects](#redirects)
+    - [`useParams`](#useparams)
   - [Debouncing State](#debouncing-state)
     - [Linking](#linking)
       - [Induce HTML directly to react](#induce-html-directly-to-react)
@@ -130,8 +131,12 @@ const SomeComponent = (props) => {
 
 ```js
 <Switch>
-  <Link to='/some-place'>Go to some place</Link>
-  <Link to='/some-other-place'>Go to some other place</Link>
+  <Route to='/some-place'>
+    <Page />
+  </Route>
+  <Route to='/some-other-place'>
+    <Page2 />
+  </Route>
 </Switch>
 ```
 
@@ -147,6 +152,21 @@ The `Redirect` component is used. The path specifies the path that of visited wi
 <Path to='/' exact>
   <Redirect to='/home' />
 </Path>
+```
+
+### `useParams`
+
+Imported from `react-router-dom`. Gives access to dynamic router sections eg.
+
+```js
+// Somewhere in link
+<Link to='/some-place/:someId'>
+  <Page />
+</Link>;
+
+// Later
+const params = useParams();
+const paramVal = params.someId;
 ```
 
 ## Debouncing State
