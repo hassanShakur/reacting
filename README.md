@@ -4,6 +4,8 @@
     - [Memos in React](#memos-in-react)
     - [UseCallback Hook](#usecallback-hook)
     - [UseMemo Hook](#usememo-hook)
+  - [React Router](#react-router)
+    - [Nested Routes](#nested-routes)
   - [Debouncing State](#debouncing-state)
     - [Linking](#linking)
       - [Induce HTML directly to react](#induce-html-directly-to-react)
@@ -15,7 +17,7 @@
     - [Main `index.js` File](#main-indexjs-file)
     - [Using Middlewares in Async Action Creators](#using-middlewares-in-async-action-creators)
     - [Reducer Rules](#reducer-rules)
-  - [React Router](#react-router)
+  - [React Router](#react-router-1)
     - [Router Types](#router-types)
 
 # Reacting
@@ -104,6 +106,37 @@ const SomeComponent = (props) => {
   }, [items]);
 };
 ```
+
+## React Router
+
+`Link` - Normal a link
+
+```js
+<Link to='/some-place'>Go to some place</Link>
+```
+
+`navLink` - Similar to `Link` but has a property `activeClassName` which receives a classname with styles to be used when the link is active.
+`Route` - Route to take.
+
+```js
+<Route path='/home'>
+  <Page />
+</Route>
+```
+
+`BrowserRouter` - The kind of `Provider` placed at the highest level needed.
+`Switch` - Prevents multiple pages rendering on the same screen as they both match the url. The first match wins.
+
+```js
+<Switch>
+  <Link to='/some-place'>Go to some place</Link>
+  <Link to='/some-other-place'>Go to some other place</Link>
+</Switch>
+```
+
+### Nested Routes
+
+Are routes inside routes. The more specific the url the lore specific the contents will be. Eg visiting `/homepage` shows the home. Inside home one can have a route to a premium homepage setup, thus another route `/homepage/premium` will display all homepage plus `premium` content.
 
 ## Debouncing State
 
