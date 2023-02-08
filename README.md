@@ -6,6 +6,7 @@
     - [UseMemo Hook](#usememo-hook)
   - [React Router](#react-router)
     - [Nested Routes](#nested-routes)
+    - [Redirects](#redirects)
   - [Debouncing State](#debouncing-state)
     - [Linking](#linking)
       - [Induce HTML directly to react](#induce-html-directly-to-react)
@@ -137,6 +138,16 @@ const SomeComponent = (props) => {
 ### Nested Routes
 
 Are routes inside routes. The more specific the url the lore specific the contents will be. Eg visiting `/homepage` shows the home. Inside home one can have a route to a premium homepage setup, thus another route `/homepage/premium` will display all homepage plus `premium` content.
+
+### Redirects
+
+The `Redirect` component is used. The path specifies the path that of visited will redirect to the `to` in `Redirect`.
+
+```js
+<Path to='/' exact>
+  <Redirect to='/home' />
+</Path>
+```
 
 ## Debouncing State
 
