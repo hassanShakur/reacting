@@ -26,6 +26,7 @@
     - [Reducer Rules](#reducer-rules)
   - [React Router](#react-router-1)
     - [Router Types](#router-types)
+  - [Lazy Loading](#lazy-loading)
 
 # Reacting
 
@@ -543,3 +544,23 @@ The default for any server when trying to access such urls is to respong with so
 Using `HashRouter` informs the server to ignore anything after the `#` symbol and thus respond with only the original domain which is mostly the `index.html`. This is thus much safer for deployment as the server will never struggle to decipher the route and always ignore the rest of the url leaving it to the client dev to handle.
 
 `MemoryRouter` doesn't display any routes in the history during navigation.
+
+## Lazy Loading
+
+Involves loading components only when needed especially in single page applications. It's a part of `React`. For it to work, another import of `Suspense` is needed for react to know what to display while the rest of the required code is being downloaded.
+The item to be shown is passed to the `fallback` attribute of the `Suspense`.
+
+```js
+import React, { Suspense } from 'react';
+
+// New import syntax
+const ComponentName = React.lazy(() => import('./path/to/component'));
+
+const App = () => {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <ComponentName />
+    </Suspense>
+  );
+};
+```
