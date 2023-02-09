@@ -8,6 +8,7 @@
     - [Nested Routes](#nested-routes)
     - [Redirects](#redirects)
     - [`useParams`](#useparams)
+    - [Programmatic Navigation](#programmatic-navigation)
   - [Debouncing State](#debouncing-state)
     - [Linking](#linking)
       - [Induce HTML directly to react](#induce-html-directly-to-react)
@@ -159,6 +160,7 @@ The `Redirect` component is used. The path specifies the path that of visited wi
 Imported from `react-router-dom`. Gives access to dynamic router sections eg.
 
 ```js
+import { useParams } from 'react-router-dom';
 // Somewhere in link
 <Link to='/some-place/:someId'>
   <Page />
@@ -167,6 +169,16 @@ Imported from `react-router-dom`. Gives access to dynamic router sections eg.
 // Later
 const params = useParams();
 const paramVal = params.someId;
+```
+
+### Programmatic Navigation
+
+```js
+import { useHistory } from 'react-router-dom';
+
+const history = useHistory();
+history.push('/path/to/page'); // Allows going back
+history.replace('/path/to/page'); // No back
 ```
 
 ## Debouncing State
