@@ -11,6 +11,8 @@
     - [Programmatic Navigation](#programmatic-navigation)
     - [Confirm Leave Page](#confirm-leave-page)
     - [Query Parameters](#query-parameters)
+    - [`useRouteMatch`](#useroutematch)
+      - [`history.push` Flexibility](#historypush-flexibility)
   - [Debouncing State](#debouncing-state)
     - [Linking](#linking)
       - [Induce HTML directly to react](#induce-html-directly-to-react)
@@ -225,6 +227,29 @@ const sortHandler = () => {
 };
 // Allows going back
 history.replace('/path/to/page'); // No back
+```
+
+### `useRouteMatch`
+
+Holds info about current url and can help in not repeating the paths in code.
+
+```js
+import { useRouteMatch } from 'react-router-dom';
+
+const match = useRouteMatch();
+
+// Match has .params, .search, .isExact, .url
+```
+
+#### `history.push` Flexibility
+
+In cases of complex route calculation, an object with several properties can be passed to simplify the route and make it more readable.
+
+```js
+history.push({
+  pathname: location.pathname,
+  search: '?some-query',
+});
 ```
 
 ## Debouncing State
