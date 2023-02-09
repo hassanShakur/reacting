@@ -10,6 +10,7 @@
     - [`useParams`](#useparams)
     - [Programmatic Navigation](#programmatic-navigation)
     - [Confirm Leave Page](#confirm-leave-page)
+    - [Query Parameters](#query-parameters)
   - [Debouncing State](#debouncing-state)
     - [Linking](#linking)
       - [Induce HTML directly to react](#induce-html-directly-to-react)
@@ -203,6 +204,28 @@ return (
 ```
 
 The `location` is the path where user is trying to navigate to.
+
+### Query Parameters
+
+URLs start with `?` and are optional paths as compared to the dynamic paths `:/id`. Example is sorting items rendered.
+
+```js
+import { useHistory, useLocation } from 'react-router-dom';
+const history = useHistory();
+const location = useLocation();
+
+const queryParam = new URLSearchParams(location.search);
+
+const sortAsc = queryParam.get('sort') === 'asc';
+
+const sortedItems = sortFunction(itemsToSort, sortAsc);
+
+const sortHandler = () => {
+  history.push('/items?sort=' + (sortAsc ? 'desc' : 'asc'));
+};
+// Allows going back
+history.replace('/path/to/page'); // No back
+```
 
 ## Debouncing State
 
