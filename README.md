@@ -9,6 +9,7 @@
     - [Redirects](#redirects)
     - [`useParams`](#useparams)
     - [Programmatic Navigation](#programmatic-navigation)
+    - [Confirm Leave Page](#confirm-leave-page)
   - [Debouncing State](#debouncing-state)
     - [Linking](#linking)
       - [Induce HTML directly to react](#induce-html-directly-to-react)
@@ -180,6 +181,28 @@ const history = useHistory();
 history.push('/path/to/page'); // Allows going back
 history.replace('/path/to/page'); // No back
 ```
+
+### Confirm Leave Page
+
+The `Prompt` component from react-router is used for confirming before leaving a page in cases like when filling a form, working togerher with form's `onFocus`.
+
+```js
+import { Prompt } from 'react-router-dom';
+
+// Later in return
+
+return (
+  <>
+    <Prompt
+      when={isEnteringDataState}
+      message={(location) => 'Sure you want to leave?'}
+    />
+    <LocalComponentLikeForm />
+  </>
+);
+```
+
+The `location` is the path where user is trying to navigate to.
 
 ## Debouncing State
 
